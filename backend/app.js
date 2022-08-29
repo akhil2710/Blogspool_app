@@ -1,8 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
+import dotenv from 'dotenv';
 import blogRouter from "./routes/blog-routes";
 import router from "./routes/user-routes";
 import cors from "cors";
+
+dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -10,7 +13,7 @@ app.use("/api/user", router);
 app.use("/api/blog", blogRouter);
 mongoose
   .connect(
-    "mongodb+srv://admin:akhil@cluster0.1txz8zm.mongodb.net/blog-web-app?retryWrites=true&w=majority"
+    process.env.MONGODB_URI
   )
   .then(() => app.listen(5000))
   .then(() =>
